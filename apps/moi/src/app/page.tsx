@@ -15,6 +15,7 @@ export default function Index() {
               <span> Hello there, </span>
               Welcome moi 👋 {Test}
             </h1>
+            <h2 className="bg-red-400 font-bold">DAMN</h2>
           </div>
 
           <div id="hero" className="rounded">

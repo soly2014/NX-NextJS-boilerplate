@@ -1,3 +1,5 @@
+import { Test } from '@ui-components';
+
 export default function Index() {
   /*
    * Replace the elements below with your own.
@@ -11,7 +13,7 @@ export default function Index() {
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome moi 👋
+              Welcome moi 👋 {Test}
             </h1>
           </div>
 

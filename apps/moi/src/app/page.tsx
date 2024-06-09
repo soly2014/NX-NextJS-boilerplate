@@ -1,4 +1,4 @@
-import { Test, Button } from '@ui-components';
+import { Button } from '@ui-components';
 
 export default function Index() {
   /*
@@ -13,7 +13,7 @@ export default function Index() {
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome moi 👋 {Test}
+              Welcome moi 👋
             </h1>
             <Button>DAMN CHADCN UI</Button>
             <h2 className="bg-red-400 font-bold">DAMN</h2>

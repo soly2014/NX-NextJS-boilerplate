@@ -12,7 +12,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <header className="bg-blue-600 text-white p-7 text-center">
+          <h1>SBC App Header</h1>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }

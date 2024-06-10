@@ -1,4 +1,4 @@
-import { Button } from '@ui';
+import { Button, SharedContent } from '@ui';
 
 export default function Index() {
   /*
@@ -15,8 +15,7 @@ export default function Index() {
               <span> Hello there, </span>
               Welcome moi 👋
             </h1>
-            <Button>DAMN CHADCN UI</Button>
-            <h2 className="bg-red-400 font-bold">DAMN</h2>
+            <SharedContent client="moi" />
           </div>
         </div>
       </div>

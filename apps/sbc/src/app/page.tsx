@@ -9,7 +9,7 @@ export default function Index() {
   return (
     <div>
       <div className="wrapper">
-        <div className="container">
+        <div className="container top-0 text-wrap col-span-1 font-extralight bg-slate-50 float-right text-right">
           <div id="welcome">
             <h1>
               <span> Hello there, </span>

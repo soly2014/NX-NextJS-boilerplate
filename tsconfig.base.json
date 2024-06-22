@@ -10,17 +10,36 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@org/chat": ["libs/chat/src/index.ts"],
-      "@org/chat/server": ["libs/chat/src/server.ts"],
-      "@ui": ["libs/ui/src/index.ts"],
-      "@utils": ["libs/utils/src/index.ts"],
-      "@chat": ["libs/chat/src/index.ts"]
+      "@chat": [
+        "libs/chat/src/index.ts"
+      ],
+      "@chat/server": [
+        "libs/chat/src/server.ts"
+      ],
+      "@localization": [
+        "libs/localization/src/index.ts"
+      ],
+      "@localization/server": [
+        "libs/localization/src/server.ts"
+      ],
+      "@ui": [
+        "libs/ui/src/index.ts"
+      ],
+      "@utils": [
+        "libs/utils/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

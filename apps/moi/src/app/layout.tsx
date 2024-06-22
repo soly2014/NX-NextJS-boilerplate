@@ -11,8 +11,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+
     <html lang="en">
-      <body>
+            <body>
+
         <header className="bg-green-600 text-center text-white p-7">
           <h1>MOI App Header</h1>
         </header>

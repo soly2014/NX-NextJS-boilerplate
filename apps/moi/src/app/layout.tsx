@@ -13,10 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header
-          className="bg-green-600
-        text-center text-white p-7"
-        >
+        <header className="bg-green-600 p-7 text-center text-white">
           <h1>MOI App Header</h1>
         </header>
         {children}

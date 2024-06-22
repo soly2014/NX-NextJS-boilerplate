@@ -1,4 +1,5 @@
 import { Button, SharedContent } from '@ui';
+import { Chat } from '@chat';
 
 export default function Index() {
   /*
@@ -15,8 +16,9 @@ export default function Index() {
               <span> Hello there, </span>
               Welcome moi 👋
             </h1>
-            <SharedContent client="moi" />
+            <Button>This is MOI</Button>
           </div>
+          <Chat />
         </div>
       </div>
     </div>

@@ -15,8 +15,7 @@ export default function Index() {
               <span> Hello there, </span>
               Welcome sbc 👋
             </h1>
-            <Button>DAMN CHADCN UI</Button>
-            <h2 className="bg-red-400 font-bold">DAMN</h2>
+            <Button>This is SBC</Button>
           </div>
         </div>
       </div>

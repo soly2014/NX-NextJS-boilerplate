@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { Button } from './index';
 import { action } from '@storybook/addon-actions';
 import '../../themes/moi.css';
+
 const meta = {
   title: 'Components/Button',
   component: Button,

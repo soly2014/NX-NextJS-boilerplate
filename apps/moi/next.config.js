@@ -1,3 +1,6 @@
+const createNextIntlPlugin = require('next-intl/plugin');
+
+const withNextIntl = createNextIntlPlugin();
 //@ts-check
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -19,4 +22,4 @@ const plugins = [
   withNx,
 ];
 
-module.exports = composePlugins(...plugins)(nextConfig);
+module.exports = composePlugins(...plugins)(withNextIntl(nextConfig));

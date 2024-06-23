@@ -1,4 +1,6 @@
 {
+  "i18n-ally.localesPaths": ["./path/to/your/messages"], // E.g. "./messages"
+  "i18n-ally.keystyle": "nested",
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"// replace with your preferred formatter extension ID
+  "editor.defaultFormatter": "esbenp.prettier-vscode" // replace with your preferred formatter extension ID
 }

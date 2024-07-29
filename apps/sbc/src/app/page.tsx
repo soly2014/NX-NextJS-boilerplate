@@ -10,8 +10,8 @@ export default function Index() {
     <div>
       <div className="wrapper">
         <div className="container top-0 col-span-1 float-right text-wrap bg-slate-50 text-right font-extralight">
-          <div id="welcome">
-            <h1>
+          <div id="welcome" className="align-center flex p-5">
+            <h1 className="align-center flex p-5">
               <span> Hello there, </span>
               Welcome sbc 👋
             </h1>

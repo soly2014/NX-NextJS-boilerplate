@@ -1,0 +1,9 @@
+{
+  "name": "gosi-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/gosi-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["gosi"],
+  "// targets": "to see all targets run: nx show project gosi-e2e --web",
+  "targets": {}
+}

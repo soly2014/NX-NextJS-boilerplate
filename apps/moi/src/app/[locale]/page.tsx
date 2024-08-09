@@ -1,5 +1,4 @@
 import { Button } from '@ui';
-import { CallWithChatExperience } from './_component/call-chat-composite';
 
 export const ENDPOINT_URL =
   'https://soly.unitedstates.communication.azure.com/';

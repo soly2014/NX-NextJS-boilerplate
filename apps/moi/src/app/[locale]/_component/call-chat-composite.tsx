@@ -17,7 +17,7 @@ import {
 import { Theme, PartialTheme, Spinner, initializeIcons } from '@fluentui/react';
 import { Button } from '@ui';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ReloadIcon, UploadIcon, FileIcon } from '@radix-ui/react-icons';
+import { ReloadIcon, UploadIcon } from '@radix-ui/react-icons';
 
 initializeIcons();
 

@@ -1,0 +1,12 @@
+{
+  "i18n-ally.localesPaths": ["../apps/gosi/messages"], // E.g. "./messages"
+  "i18n-ally.keystyle": "nested",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "appService.defaultWebAppToDeploy": "/subscriptions/1e536109-4245-4f82-9923-c3b1f3a1eb33/resourceGroups/test-rg/providers/Microsoft.Web/sites/test-endak-frontend",
+  "appService.deploySubpath": "dist/apps/gosi",
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ] // replace with your preferred formatter extension ID
+}

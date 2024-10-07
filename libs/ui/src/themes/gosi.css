@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for App1 theme */
+
+@layer base {
+  :root {
+    /* Primary colors for <Button /> */
+    --primary: 240 100% 15.3%;
+    --primary-foreground: 0 0% 100%; /* button text color */
+
+    /* Secondary colors for <Button /> */
+    --secondary: 120 100% 37%;
+    --secondary-foreground: 0 0% 0%; /* button text color */
+    --secondary-hover: 120 60% 84%;
+    --secondary-focus: 120 100% 90%;
+
+    /* background and foreground => text color */
+    --background: 216 21.7% 90.8%;
+    --foreground: 20 14.3% 4.1%; /* text color */
+
+    /* Background color for <Card /> */
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%; /* text color */
+
+    /* Background color for popovers such as <DropdownMenu />, <HoverCard />, <Popover /> */
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+
+    /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+
+    /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+
+    /* Used for destructive actions such as <Button variant="destructive"> */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+
+    /* Default border color for all elements EXCEPT <Input />, <Select />, <Textarea /> */
+    --border: 240 38% 32%;
+
+    /* Border color for inputs such as <Input />, <Select />, <Textarea /> */
+    --input: 233 24% 93%;
+    --input-placeholder: 236 15% 40%;
+    --input-background: 0 0% 100%;
+
+    /* Used for focus ring */
+    --ring: 240 38% 32%;
+
+    /* Border radius for card, input and buttons */
+    --radius: 0.3rem;
+  }
+
+  .dark {
+    --background: 240 100% 10%; /* Dark background version of primary */
+    --foreground: 240 100% 90%; /* Light foreground for contrast */
+    --card: 240 100% 12%; /* Slightly lighter card */
+    --card-foreground: 240 100% 90%; /* Light foreground */
+    --popover: 240 100% 12%; /* Same as card */
+    --popover-foreground: 240 100% 90%; /* Light foreground */
+    --primary: 240 100% 15.3%; /* Primary color */
+    --primary-foreground: 240 100% 98%; /* Light version for contrast */
+    --secondary: 240 100% 20%; /* Darker secondary for contrast */
+    --secondary-foreground: 240 100% 90%; /* Light for contrast */
+    --muted: 240 100% 15%; /* Muted dark version */
+    --muted-foreground: 240 100% 80%; /* Light muted foreground */
+    --accent: 240 100% 25%; /* Accent with more saturation */
+    --accent-foreground: 240 100% 90%; /* Light for contrast */
+    --destructive: 240 100% 10%; /* Dark destructive action */
+    --destructive-foreground: 240 100% 98%; /* Light for contrast */
+    --border: 240 100% 12%; /* Border slightly lighter */
+    --input: 240 100% 12%; /* Input similar to border */
+    --ring: 240 100% 15.3%; /* Primary color */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+}
+
+.ms-Stack .ms-Button.ms-Button--primary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border: none; /* Remove any default borders */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Adjust padding for size */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.ms-Stack .ms-Button.ms-Button--primary:hover {
+  background-color: hsl(var(--secondary-hover)); /* Hover color */
+}
+
+.ms-Stack .ms-Button.ms-Button--primary:focus {
+  background-color: hsl(var(--secondary-hover));
+  outline: 8px solid hsl(var(--secondary-focus)); /* Focus outline */
+}
+
+.ms-Stack .ms-Button.ms-Button--primary:disabled {
+  background-color: #e5e7ea; /* Disabled background */
+  color: #00004e; /* Keep text color same for disabled */
+  cursor: not-allowed; /* Show not-allowed cursor on disabled */
+}
+
+input,
+select,
+textarea {
+  font-size: 16px !important;
+}
+
+html[dir='rtl'] .ms-Icon[data-icon-name='ChevronRight'] {
+  transform: rotate(180deg); /* Flip the ChevronRight to ChevronLeft */
+}

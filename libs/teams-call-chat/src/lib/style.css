@@ -1,0 +1,22 @@
+.css-174 {
+  min-height: 44rem !important;
+}
+
+.css-149 {
+  min-height: 70dvh !important;
+}
+
+/* Styles for left-to-right (LTR) direction */
+:dir(ltr) .ms-StackItem.css-304 {
+  direction: ltr !important;
+}
+
+/* Styles for right-to-left (RTL) direction */
+:dir(rtl) .ms-StackItem.css-304 {
+  /* Apply styles for RTL */
+  direction: rtl !important;
+}
+
+[dir='rtl'] #sendIconWrapper {
+  transform: rotate(180deg);
+}

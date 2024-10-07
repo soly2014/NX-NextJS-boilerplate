@@ -1,0 +1,52 @@
+name: deploy on dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SSH key
+        id: install-ssh-key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: pulling and build code
+        id: pull-and-build
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USER_NAME }}@${{ secrets.DEV_IP }} "
+                cd /var/www/frontend/ &&
+                git pull origin dev &&
+                sudo pnpm install &&
+                sudo npx nx build app-one --skip-nx-cache --output-path ./dist/apps/app-one/temp_dev &&
+                sudo npx nx build app-two --skip-nx-cache --output-path ./dist/apps/app-two/temp_dev &&
+                sudo npx nx build app-four --skip-nx-cache --output-path ./dist/apps/app-four/temp_dev &&
+                sudo rm -fr /var/www/frontend/dist/apps/app-two/development &&
+                sudo rm -fr /var/www/frontend/dist/apps/app-one/development &&
+                sudo rm -fr /var/www/frontend/dist/apps/app-four/development &&
+                sudo mv /var/www/frontend/dist/apps/app-two/temp_dev /var/www/frontend/dist/apps/app-two/development &&
+                sudo mv /var/www/frontend/dist/apps/app-one/temp_dev /var/www/frontend/dist/apps/app-one/development &&
+                sudo mv /var/www/frontend/dist/apps/app-four/temp_dev /var/www/frontend/dist/apps/app-four/development
+              "
+      - name: set pr url
+        if: always()
+        id: pr-url
+        uses: kceb/pull-request-url-action@v1
+        with:
+          github-oauth-token: ghp_n7SfLbcdhdbchdbchdbcMnksqLhY7T0yKn4L
+
+      - name: print info
+        if: always()
+        run: |
+          echo "Repository Name: $GITHUB_REPOSITORY"
+          echo "Branch Name: $GITHUB_REF"
+          echo "pr-url: ${{ steps.pr-url.outputs.url }}"
+          echo "Execution Time: $(date)"
+          echo "Workflow Status: ${{ job.status }}"
+          curl --insecure -X POST -H 'Content-type: application/json' --data '{"text":"Repository Name: '"$GITHUB_REPOSITORY"'\nBranch Name: '"$GITHUB_REF"'\nExecution Time: '"$(date)"'\nWorkflow Status: '"${{ job.status }}"'\n pull request URL: '"${{ steps.pr-url.outputs.url }}"'"}' https://hooks.slack.com/services/Tuhu/B0nunn/uuju

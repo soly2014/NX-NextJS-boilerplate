@@ -105,7 +105,6 @@ export const WaitingPage: React.FC<{
                 ? 1
                 : (waitingStatus?.count ?? 'N/A')}
           </span>{' '}
-          {t('waiting_queue_count')}
         </p>
 
         <button

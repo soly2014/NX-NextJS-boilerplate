@@ -185,7 +185,7 @@
   "all_rights_reserved": "All rights reserved © 2024",
   "waiting_room_title": "You are now in the virtual waiting room",
   "waiting_room_description": "You will be directly transferred to the specialized employee.",
-  "waiting_queue_message": "Please wait, there are",
+  "waiting_queue_message": "Number of customers ahead of you:",
   "waiting_queue_count": "employees ahead:",
   "exit": "Exit",
   "visit_satisfaction": "How satisfied are you with the virtual visit service?",

@@ -7,7 +7,7 @@ const Page = ({ params: { locale } }: { params: { locale: string } }) => {
   const [isCallAdmitted, setIsCallAdmitted] = useState(false);
   console.log(isCallAdmitted, 'isCallAdmitted Main Page');
   return (
-    <>
+    <div>
       <WaitingPage isCallAdmitted={isCallAdmitted} />
       <Call
         locale={locale}
@@ -15,7 +15,7 @@ const Page = ({ params: { locale } }: { params: { locale: string } }) => {
         setIsCallAdmitted={setIsCallAdmitted}
       />
       {!isCallAdmitted && <Footer className="fixed bottom-0 w-full" />}
-    </>
+    </div>
   );
 };
 

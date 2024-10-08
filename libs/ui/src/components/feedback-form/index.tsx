@@ -76,8 +76,8 @@ export const FeedbackForm: React.FC = () => {
 
   const { handleSubmit, setValue, watch, getValues, control } = methods;
 
-  const ratings = watch('ratings', 3); // Default to 3
-  const serviceRatings = watch('serviceRatings', 3); // Default to 3
+  const ratings = watch('ratings', 5); // Default to 5
+  const serviceRatings = watch('serviceRatings', 5); // Default to 5
 
   // React-query mutation to send the feedback data
   const mutation = useMutation({
@@ -205,7 +205,7 @@ export const FeedbackForm: React.FC = () => {
           </div>
         </div>
 
-        {(ratings === 2 || serviceRatings === 2) && (
+        {(ratings <= 2 || serviceRatings <= 2) && (
           <div className="mb-4 w-full max-w-sm">
             <FormField
               name="reasonForBadRating"

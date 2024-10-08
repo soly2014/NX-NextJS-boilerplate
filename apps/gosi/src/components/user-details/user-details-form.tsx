@@ -223,7 +223,20 @@ const UserDetailsForm = ({
                     {...field}
                     id="phone"
                     placeholder={t('mobile_placeholder')}
-                    className="rounded-l-none"
+                    value={
+                      field.value.startsWith('05')
+                        ? field.value
+                        : `05${field.value}`
+                    }
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value.slice(0, 2) === '05'
+                          ? e.target.value
+                          : `05${e.target.value}`,
+                      )
+                    }
+                    className="rounded-l"
+                    style={{ direction: 'ltr' }}
                     maxLength={10}
                   />
                 </FormControl>

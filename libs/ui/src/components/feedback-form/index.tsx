@@ -67,8 +67,8 @@ export const FeedbackForm: React.FC = () => {
   const methods = useForm<FeedbackFormSchema>({
     resolver: zodResolver(feedbackFormSchema(t)),
     defaultValues: {
-      ratings: 3,
-      serviceRatings: 3,
+      ratings: 5,
+      serviceRatings: 5,
       comments: '',
       reasonForBadRating: '',
     },

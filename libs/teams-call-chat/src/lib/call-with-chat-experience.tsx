@@ -224,10 +224,8 @@ export const CallWithChatExperience = ({
       formData.append('callId', meetingId);
 
       const baseURL = process.env.NEXT_PUBLIC_BASE_API_URL;
-
-      // ="https://gosivvas-report-api-uat.azurewebsites.net/"
-
       const url = `${baseURL}Attatchment/customer/upload`;
+
       try {
         const response = await fetch(url, {
           method: 'POST',
@@ -236,13 +234,15 @@ export const CallWithChatExperience = ({
             'content-length': `${file.size}`,
           },
         });
+
         const result = await response.json();
 
-        // Assuming the result contains a file path or URL, you can use it in your message
-        if (result && result.filePath) {
-          handleMessageSend(`File uploaded successfully: ${result.filePath}`);
+        if (response.ok) {
+          // Send a message with the file name and extension if the upload is successful
+          const fileNameWithExtension = `${file.name}`;
+          handleMessageSend(`${fileNameWithExtension}`);
         } else {
-          handleMessageSend('File uploaded successfully.');
+          handleMessageSend('Error uploading file');
         }
       } catch (error) {
         handleMessageSend('Error uploading file');

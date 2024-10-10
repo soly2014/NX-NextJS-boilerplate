@@ -31,7 +31,7 @@ export default function Home() {
     return <FullPageError />;
   }
 
-  if (gosiPublic && !newGosi) {
+  if (!gosiPublic && !newGosi) {
     return <OutOfWorkingHours />;
   }
 

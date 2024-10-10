@@ -10,7 +10,7 @@ export function Header({ locale }: { locale: string }) {
       <SectionContainer className="h-full px-1 md:px-16">
         <div className="mx-auto flex h-full items-center justify-between">
           <div className="flex items-center">
-            <Link href={'/'}>
+            <Link href={'https://www.gosi.gov.sa/ar'}>
               <Image
                 src="/logo.svg"
                 alt="Gosi Logo"

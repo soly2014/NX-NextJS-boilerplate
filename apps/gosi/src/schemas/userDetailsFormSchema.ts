@@ -33,25 +33,36 @@ export const userDetailsFormSchema = (t: any) => {
         .enum(['retirement', 'insurance', 'newSystem'])
         .refine((value) => value !== undefined, {
           message: t('validation.this_field_is_required'),
-        }),
+        }), // Ensures serviceType is required
       idNumber: z
         .string()
+        .min(1, { message: t('validation.this_field_is_required') }) // Ensures idNumber is required
+        .regex(/^[0-9]*$/, {
+          message: t('validation.idNumber_digits'),
+        })
         .length(10, {
           message: t('validation.idNumber_length'),
-        })
-        .regex(/^\d+$/, {
-          message: t('validation.idNumber_digits'),
-        }),
+        }), // Ensures idNumber is numeric and exactly 10 digits
       name: z
         .string()
-        .min(1, { message: t('validation.this_field_is_required') })
-        .regex(/^[^0-9]*$/, { message: t('validation.name_invalid') }), // Ensure no digits in the name
-      phone: z.string().regex(/^05\d{8}$/, {
-        message: t('validation.phone_invalid'),
-      }),
+        .min(1, { message: t('validation.this_field_is_required') }) // Ensures name is required
+        .regex(/^[a-zA-Z\u0600-\u06FF\s.]{2,50}$/, {
+          // Validates name with 2-50 characters, allowing spaces
+          message: t('validation.name_invalid'),
+        })
+        .refine((val) => val.trim().length >= 2 && val.trim().length <= 50, {
+          message: t('validation.name_invalid'), // Ensures name length between 2 and 50 (excluding leading/trailing spaces)
+        })
+        .transform((val) => val.trim()), // Ensures no leading/trailing spaces
+      phone: z
+        .string()
+        .min(1, { message: t('validation.this_field_is_required') }) // Ensures phone is required
+        .regex(/^05\d{8}$/, {
+          message: t('validation.phone_invalid'),
+        }), // Validates Saudi-style phone numbers starting with 05
       agreement: z.boolean().refine((value) => value === true, {
         message: t('validation.agree_to_terms'),
-      }),
+      }), // Ensures agreement to terms is checked
       signLanguage: z.enum(['yes', 'no']),
       insurance_types: z.enum(['gosi-public', 'new-est-main']).optional(),
     })

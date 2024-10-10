@@ -20,16 +20,14 @@ import {
   Input,
 } from '@ui';
 import { useUserStore } from '@gosi/store/useUserStore';
-
 import {
   userDetailsFormSchema,
   FormSchema,
 } from '@gosi/schemas/userDetailsFormSchema';
 import { useSendCustomerOtpMutation } from '@gosi/queries/userMutations';
-import { AlertError } from '@ui';
 import { useLocale } from 'next-intl';
 import { AxiosError } from 'axios';
-import { useWorkingHoursAllQuery } from '@gosi/queries/useWorkingHours'; // Updated hook
+import { useWorkingHoursAllQuery } from '@gosi/queries/useWorkingHours';
 
 const UserDetailsForm = ({
   setStep,
@@ -59,7 +57,7 @@ const UserDetailsForm = ({
     },
   });
 
-  const { handleSubmit, control } = methods;
+  const { handleSubmit, control, setError, clearErrors } = methods;
   const serviceType = useWatch({ control, name: 'serviceType' });
 
   const sendCustomerOtpMutation = useSendCustomerOtpMutation(setStep);
@@ -123,6 +121,7 @@ const UserDetailsForm = ({
                     <SelectValue placeholder={t('select_service_type')} />
                   </SelectTrigger>
                   <SelectContent>
+                    {/* <SelectItem value="">{t('select_none')}</SelectItem> */}
                     {newGosi && (
                       <SelectItem value="newSystem">
                         {t('new_system')}
@@ -186,6 +185,19 @@ const UserDetailsForm = ({
                   {...field}
                   id="idNumber"
                   placeholder={t('nin_residence_placeholder')}
+                  maxLength={10}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value);
+                    if (/[^0-9]/.test(value)) {
+                      setError('idNumber', {
+                        type: 'manual',
+                        message: t('idNumber_invalid'),
+                      });
+                    } else {
+                      clearErrors('idNumber');
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />

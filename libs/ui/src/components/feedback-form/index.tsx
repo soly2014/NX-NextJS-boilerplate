@@ -25,21 +25,21 @@ const feedbackFormSchema = (t: any) => {
   return z
     .object({
       ratings: z
-        .number()
+        .number({ required_error: t('validation.rating_required') })
         .min(1)
         .max(5, { message: t('validation.max_rating') }),
       serviceRatings: z
-        .number()
+        .number({ required_error: t('validation.rating_required') })
         .min(1)
         .max(5, { message: t('validation.max_rating') }),
       comments: z
-        .string()
+        .string({ required_error: t('validation.comment_required') })
         .min(1, { message: t('validation.comment_required') }),
       reasonForBadRating: z.string().optional(),
     })
     .superRefine((data, ctx) => {
       if (
-        (data.ratings === 1 || data.serviceRatings === 1) &&
+        (data.ratings <= 2 || data.serviceRatings <= 2) &&
         !data.reasonForBadRating?.trim()
       ) {
         ctx.addIssue({
@@ -67,17 +67,28 @@ export const FeedbackForm: React.FC = () => {
   const methods = useForm<FeedbackFormSchema>({
     resolver: zodResolver(feedbackFormSchema(t)),
     defaultValues: {
-      ratings: 5,
-      serviceRatings: 5,
+      ratings: undefined,
+      serviceRatings: undefined,
       comments: '',
       reasonForBadRating: '',
     },
   });
 
-  const { handleSubmit, setValue, watch, getValues, control } = methods;
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    control,
+    formState: { errors },
+  } = methods;
 
-  const ratings = watch('ratings', 5); // Default to 5
-  const serviceRatings = watch('serviceRatings', 5); // Default to 5
+  const ratings = watch('ratings');
+  const serviceRatings = watch('serviceRatings');
+
+  React.useEffect(() => {
+    methods.register('ratings', { required: true });
+    methods.register('serviceRatings', { required: true });
+  }, [methods]);
 
   // React-query mutation to send the feedback data
   const mutation = useMutation({
@@ -103,7 +114,7 @@ export const FeedbackForm: React.FC = () => {
 
   // Handle form submission
   const onSubmit = (data: FeedbackFormSchema) => {
-    if (data?.ratings !== 1 && data?.serviceRatings !== 1) {
+    if (data?.ratings <= 2 && data?.serviceRatings <= 2) {
       delete data.reasonForBadRating;
     }
 
@@ -120,7 +131,7 @@ export const FeedbackForm: React.FC = () => {
     ratingType: 'ratings' | 'serviceRatings',
     rating: number,
   ) => {
-    setValue(ratingType, rating);
+    setValue(ratingType, rating, { shouldValidate: true });
   };
 
   return (
@@ -144,11 +155,13 @@ export const FeedbackForm: React.FC = () => {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill={star <= ratings ? 'currentColor' : 'none'}
+                    fill={star <= (ratings || 0) ? 'currentColor' : 'none'}
                     stroke="currentColor"
                     strokeWidth=".7"
                     className={`h-8 w-8 md:h-10 md:w-10 ${
-                      star <= ratings ? 'text-secondary' : 'text-secondary'
+                      star <= (ratings || 0)
+                        ? 'text-secondary'
+                        : 'text-secondary'
                     }`}
                   >
                     <path
@@ -159,11 +172,16 @@ export const FeedbackForm: React.FC = () => {
                   </svg>
                 </span>
               ))}
-              <span className="#242339 ps-3 pt-1 text-3xl font-bold">
-                {ratings}/5
-              </span>
+              {ratings !== undefined && (
+                <span className="#242339 ps-3 pt-1 text-3xl font-bold">
+                  {ratings}/5
+                </span>
+              )}
             </div>
           </div>
+          {errors.ratings && (
+            <p className="mt-2 text-red-500">{t('required_field')}</p>
+          )}
         </div>
 
         <div className="mb-4">
@@ -181,11 +199,13 @@ export const FeedbackForm: React.FC = () => {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill={star <= serviceRatings ? 'currentColor' : 'none'}
+                    fill={
+                      star <= (serviceRatings || 0) ? 'currentColor' : 'none'
+                    }
                     stroke="currentColor"
                     strokeWidth=".7"
                     className={`h-8 w-8 md:h-10 md:w-10 ${
-                      star <= serviceRatings
+                      star <= (serviceRatings || 0)
                         ? 'text-secondary'
                         : 'text-secondary'
                     }`}
@@ -199,10 +219,15 @@ export const FeedbackForm: React.FC = () => {
                 </span>
               ))}
             </div>
-            <span className="#242339 ps-3 pt-3 text-3xl font-bold">
-              {serviceRatings}/5
-            </span>
+            {serviceRatings !== undefined && (
+              <span className="#242339 ps-3 pt-3 text-3xl font-bold">
+                {serviceRatings}/5
+              </span>
+            )}
           </div>
+          {errors.serviceRatings && (
+            <p className="mt-2 text-red-500">{t('required_field')}</p>
+          )}
         </div>
 
         {(ratings <= 2 || serviceRatings <= 2) && (

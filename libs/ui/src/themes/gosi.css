@@ -123,6 +123,6 @@ textarea {
   font-size: 16px !important;
 }
 
-html[dir='rtl'] .ms-Icon[data-icon-name='ChevronRight'] {
-  transform: rotate(180deg); /* Flip the ChevronRight to ChevronLeft */
+html[dir='rtl'] .ms-Icon[data-icon-name='ChevronLeft'] {
+  transform: rotate(180deg); /* Flip the ChevronLeft to ChevronLeft */
 }

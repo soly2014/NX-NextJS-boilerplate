@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 export type ServiceType =
   | 'gosi-establishment'
-  | 'new-est-main'
+  | 'new-est'
   | 'gosi-public'
   | 'gosi-ppa'
   | 'new-gosi';

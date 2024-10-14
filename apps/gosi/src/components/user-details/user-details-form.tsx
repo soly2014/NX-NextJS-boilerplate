@@ -48,7 +48,7 @@ const UserDetailsForm = ({
   const methods = useForm<FormSchema>({
     resolver: zodResolver(userDetailsFormSchema(t)),
     defaultValues: {
-      serviceType: 'retirement',
+      serviceType: undefined,
       idNumber: '',
       name: '',
       phone: '',
@@ -74,9 +74,7 @@ const UserDetailsForm = ({
         break;
       case 'insurance':
         serviceTypeAsParam =
-          data.insurance_types === 'gosi-public'
-            ? 'gosi-public'
-            : 'new-est-main';
+          data.insurance_types === 'gosi-public' ? 'gosi-public' : 'new-est';
         break;
       default:
         serviceTypeAsParam = 'gosi-establishment';
@@ -110,18 +108,31 @@ const UserDetailsForm = ({
         <FormField
           name="serviceType"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel htmlFor="serviceType" className="text-end">
                 {t('serviceType')}
               </FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    if (value === 'none') {
+                      setError('serviceType', {
+                        type: 'required',
+                        message: t('validation.this_field_is_required'),
+                      });
+                    } else {
+                      clearErrors('serviceType');
+                    }
+                  }}
+                  value={field.value}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={t('select_service_type')} />
                   </SelectTrigger>
                   <SelectContent>
-                    {/* <SelectItem value="">{t('select_none')}</SelectItem> */}
+                    <SelectItem value="none">{t('select_none')}</SelectItem>
                     {newGosi && (
                       <SelectItem value="newSystem">
                         {t('new_system')}
@@ -140,7 +151,14 @@ const UserDetailsForm = ({
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormMessage />
+              {/* Display error message for serviceType */}
+              <FormMessage>
+                {fieldState?.error?.message && (
+                  <span className="text-destructive">
+                    {fieldState.error.message}
+                  </span>
+                )}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -159,7 +177,7 @@ const UserDetailsForm = ({
                     </label>
                   </div>
                   <div className="flex items-center">
-                    <RadioGroupItem value="new-est-main" />
+                    <RadioGroupItem value="new-est" />
                     <label
                       htmlFor="Establishments"
                       className="ms-2 text-gray-700"
@@ -230,7 +248,7 @@ const UserDetailsForm = ({
             <FormItem>
               <FormLabel htmlFor="phone">{t('mobile')}</FormLabel>
               <div className="flex items-center">
-                <FormControl className="mt-0 flex-grow">
+                <FormControl>
                   <Input
                     {...field}
                     id="phone"
@@ -247,7 +265,6 @@ const UserDetailsForm = ({
                           : `05${e.target.value}`,
                       )
                     }
-                    className="rounded-l"
                     style={{ direction: 'ltr' }}
                     maxLength={10}
                   />

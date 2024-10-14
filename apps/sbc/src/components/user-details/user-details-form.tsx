@@ -76,9 +76,7 @@ const UserDetailsForm = ({
         break;
       case 'insurance':
         serviceTypeAsParam =
-          data.insurance_types === 'gosi-public'
-            ? 'gosi-public'
-            : 'new-est-main';
+          data.insurance_types === 'gosi-public' ? 'gosi-public' : 'new-est';
         break;
       default:
         serviceTypeAsParam = 'gosi-establishment';
@@ -160,7 +158,7 @@ const UserDetailsForm = ({
                     </label>
                   </div>
                   <div className="flex items-center">
-                    <RadioGroupItem value="new-est-main" />
+                    <RadioGroupItem value="new-est" />
                     <label
                       htmlFor="Establishments"
                       className="ms-2 text-gray-700"

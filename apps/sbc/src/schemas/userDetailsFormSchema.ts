@@ -50,7 +50,7 @@ export const userDetailsFormSchema = (t: any) => {
         message: t('validation.agreement_required'),
       }),
       signLanguage: z.enum(['yes', 'no']),
-      insurance_types: z.enum(['gosi-public', 'new-est-main']).optional(),
+      insurance_types: z.enum(['gosi-public', 'new-est']).optional(),
     })
     .superRefine((data, ctx) => {
       if (data.serviceType === 'insurance' && !data.insurance_types) {

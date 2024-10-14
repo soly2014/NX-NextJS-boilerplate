@@ -6,20 +6,22 @@ import * as z from 'zod';
 export const userDetailsFormSchema = (t: any) => {
   z.setErrorMap((issue, ctx: any) => {
     const errorMessages: Record<string, string> = {
-      invalid_type: t('validation.invalid_type', { path: ctx.path.join('.') }),
+      invalid_type: t('validation.this_field_is_required', {
+        path: ctx?.path?.length ? ctx.path.join('.') : 'unknown path',
+      }),
       invalid_string: t('validation.invalid_string', {
-        path: ctx.path.join('.'),
+        path: ctx?.path?.length ? ctx.path.join('.') : 'unknown path',
       }),
       too_small: t('validation.too_small', {
-        path: ctx.path.join('.'),
-        min: ctx.minimum,
+        path: ctx?.path?.length ? ctx.path.join('.') : 'unknown path',
+        min: ctx?.minimum || 'unknown',
       }),
       too_big: t('validation.too_big', {
-        path: ctx.path.join('.'),
-        max: ctx.maximum,
+        path: ctx?.path?.length ? ctx.path.join('.') : 'unknown path',
+        max: ctx?.maximum || 'unknown',
       }),
       invalid_enum_value: t('validation.invalid_enum_value', {
-        path: ctx.path.join('.'),
+        path: ctx?.path?.length ? ctx.path.join('.') : 'unknown path',
       }),
       custom: issue.message || t('validation.default'),
     };
@@ -30,8 +32,8 @@ export const userDetailsFormSchema = (t: any) => {
   return z
     .object({
       serviceType: z
-        .enum(['retirement', 'insurance', 'newSystem'])
-        .refine((value) => value !== undefined, {
+        .enum(['retirement', 'insurance', 'newSystem', 'none'])
+        .refine((value) => value !== 'none', {
           message: t('validation.this_field_is_required'),
         }), // Ensures serviceType is required
       idNumber: z
@@ -64,7 +66,7 @@ export const userDetailsFormSchema = (t: any) => {
         message: t('validation.agree_to_terms'),
       }), // Ensures agreement to terms is checked
       signLanguage: z.enum(['yes', 'no']),
-      insurance_types: z.enum(['gosi-public', 'new-est-main']).optional(),
+      insurance_types: z.enum(['gosi-public', 'new-est']).optional(),
     })
     .superRefine((data, ctx) => {
       if (data.serviceType === 'insurance' && !data.insurance_types) {

@@ -57,22 +57,26 @@ export const TeamsCallChat = ({
             cameraButton: true,
             chatButton: true,
             displayType: deviceType === 'desktop' ? 'default' : 'compact', // | 'compact'
-            dtmfDialerButton: true,
+            dtmfDialerButton: false,
             endCallButton: true,
-            exitSpotlightButton: true,
+            exitSpotlightButton: false,
             microphoneButton: true,
-            moreButton: true,
+            moreButton: false,
             participantsButton: true,
             peopleButton: true,
             raiseHandButton: false,
             reactionButton: true,
             screenShareButton: true,
-            teamsMeetingPhoneCallButton: true,
+            teamsMeetingPhoneCallButton: false,
+            holdButton: false,
+            captionsButton: true,
           },
+
           surveyOptions: {
             disableSurvey: true,
           },
           localVideoTile: { position: 'grid' },
+
           // branding: {
           //   logo: {
           //     url: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',

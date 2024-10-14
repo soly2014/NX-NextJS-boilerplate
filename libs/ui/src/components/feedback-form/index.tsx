@@ -25,16 +25,16 @@ const feedbackFormSchema = (t: any) => {
   return z
     .object({
       ratings: z
-        .number({ required_error: t('validation.rating_required') })
+        .number({ required_error: t('validation.this_field_is_required') })
         .min(1)
         .max(5, { message: t('validation.max_rating') }),
       serviceRatings: z
-        .number({ required_error: t('validation.rating_required') })
+        .number({ required_error: t('validation.this_field_is_required') })
         .min(1)
         .max(5, { message: t('validation.max_rating') }),
       comments: z
-        .string({ required_error: t('validation.comment_required') })
-        .min(1, { message: t('validation.comment_required') }),
+        .string({ required_error: t('validation.this_field_is_required') })
+        .min(1, { message: t('validation.this_field_is_required') }),
       reasonForBadRating: z.string().optional(),
     })
     .superRefine((data, ctx) => {
@@ -45,7 +45,7 @@ const feedbackFormSchema = (t: any) => {
         ctx.addIssue({
           code: 'custom',
           path: ['reasonForBadRating'],
-          message: t('validation.reason_required'),
+          message: t('validation.this_field_is_required'),
         });
       }
     });
@@ -244,11 +244,7 @@ export const FeedbackForm: React.FC = () => {
                     {t('reason_for_bad_rating_label')}
                   </FormLabel>
                   <FormControl>
-                    <Textarea
-                      {...field}
-                      id="reasonForBadRating"
-                      placeholder={t('reason_for_bad_rating_placeholder')}
-                    />
+                    <Textarea {...field} id="reasonForBadRating" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -270,11 +266,7 @@ export const FeedbackForm: React.FC = () => {
                   {t('comment_label')}
                 </FormLabel>
                 <FormControl>
-                  <Textarea
-                    {...field}
-                    id="comments"
-                    placeholder={t('comment_placeholder')}
-                  />
+                  <Textarea {...field} id="comments" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

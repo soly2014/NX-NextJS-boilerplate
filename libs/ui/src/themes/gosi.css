@@ -117,6 +117,16 @@
   cursor: not-allowed; /* Show not-allowed cursor on disabled */
 }
 
+.ms-Stack .ms-Button.ms-Button--default {
+  /* Remove any default borders */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Adjust padding for size */
+  font-size: 16px; /* Adjust font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
 input,
 select,
 textarea {

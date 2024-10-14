@@ -69,7 +69,7 @@ export const ConfigPage: React.FC = () => {
     },
   });
 
-  const { handleSubmit, control } = methods;
+  const { handleSubmit, control, setValue } = methods;
 
   const {
     refetch: fetchTokenData,
@@ -88,18 +88,43 @@ export const ConfigPage: React.FC = () => {
     tokenData,
   );
 
+  // 30 minutes in milliseconds
+  const THIRTY_MINUTES = 30 * 60 * 1000;
+  useEffect(() => {
+    // Set a timer to redirect the user after 5 minutes (300,000 ms)
+    const timer = setTimeout(() => {
+      router.push('/timeout'); // Redirect to a page of your choice
+    }, THIRTY_MINUTES); // 300,000 ms = 5 minutes
+
+    // Clear the timer when the component unmounts
+    return () => clearTimeout(timer);
+  }, [router]);
+
   useEffect(() => {
     async function fetchDevices() {
       const permissionGranted = await askDevicePermissions();
       if (!permissionGranted) {
         setIsPermissionDenied(true);
+      } else {
+        // Fetch the device list if permission is granted
+        const deviceList = await queryDevices();
+        setDevices(deviceList);
+
+        // Set default values to the first available device for each category
+        if (deviceList.cameras.length > 0) {
+          setValue('camera', deviceList.cameras[0].deviceId);
+        }
+        if (deviceList.microphones.length > 0) {
+          setValue('microphone', deviceList.microphones[0].deviceId);
+        }
+        if (deviceList.speakers.length > 0) {
+          setValue('speaker', deviceList.speakers[0].deviceId);
+        }
       }
-      const deviceList = await queryDevices();
-      setDevices(deviceList);
     }
 
     fetchDevices();
-  }, []);
+  }, [setValue]);
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);

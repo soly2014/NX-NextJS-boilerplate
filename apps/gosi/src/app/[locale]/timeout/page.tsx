@@ -19,9 +19,9 @@ export const ThankYouPage: React.FC = async () => {
       <div className="flex flex-col items-center justify-center py-10">
         <div className="max-w-md rounded-md p-6 text-center">
           <h2 className="mb-4 text-2xl font-bold text-gray-800">
-            {t('thank_you_for_participating')}
+            {t('thank_you')}
           </h2>
-          <p className="mb-6 text-gray-700">{t('satisfaction_message')}</p>
+          <p className="mb-6 text-gray-700">{t('time_out_message')}</p>
           <Button
             variant="secondary"
             onClick={handleHomeRedirect}

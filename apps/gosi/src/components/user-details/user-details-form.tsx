@@ -80,6 +80,10 @@ const UserDetailsForm = ({
         serviceTypeAsParam = 'gosi-establishment';
     }
 
+    if (data?.signLanguage === 'yes') {
+      serviceTypeAsParam = 'gosi-signlanguage';
+    }
+
     setFullname(data.name);
     setNin(data.idNumber);
     setMobile(data.phone);

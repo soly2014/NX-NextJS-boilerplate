@@ -45,7 +45,7 @@ export const WaitingPage: React.FC<{
   });
 
   // 30 minutes in milliseconds
-  const THIRTY_MINUTES = 60 * 1000;
+  const THIRTY_MINUTES = 30 * 60 * 1000;
   useEffect(() => {
     // Set a timer to redirect the user after 5 minutes (300,000 ms)
     const timer = setTimeout(() => {

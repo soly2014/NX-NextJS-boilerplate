@@ -132,7 +132,7 @@ const UserDetailsForm = ({
                     <SelectValue placeholder={t('select_service_type')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">{t('select_none')}</SelectItem>
+                    {/* <SelectItem value="none">{t('select_none')}</SelectItem> */}
                     {newGosi && (
                       <SelectItem value="newSystem">
                         {t('new_system')}

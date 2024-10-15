@@ -58,10 +58,6 @@ export const WaitingPage: React.FC<{
 
   useEffect(() => {
     if (isCallAdmitted) {
-      // router.replace(
-      //   `/call?meetingLink=${meetingLink}&meetingId=${meetingId}&serviceType=${serviceType}&fullName=${fullName}&userToken=${userToken}&userId=${userId}`,
-      // );
-
       queryClient.cancelQueries({
         queryKey: ['waitingStatus', meetingId, serviceType],
       });

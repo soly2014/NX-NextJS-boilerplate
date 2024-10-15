@@ -89,7 +89,7 @@ export const ConfigPage: React.FC = () => {
   );
 
   // 30 minutes in milliseconds
-  const THIRTY_MINUTES = 60 * 1000;
+  const THIRTY_MINUTES = 30 * 60 * 1000;
   useEffect(() => {
     // Set a timer to redirect the user after 5 minutes (300,000 ms)
     const timer = setTimeout(() => {
@@ -112,12 +112,15 @@ export const ConfigPage: React.FC = () => {
 
         // Set default values to the first available device for each category
         if (deviceList.cameras.length > 0) {
+          console.log(deviceList.cameras[0], 'deviceList.cameras[0]');
           setValue('camera', deviceList.cameras[0].deviceId);
         }
         if (deviceList.microphones.length > 0) {
+          console.log(deviceList.microphones[0], 'deviceList.microphones[0]');
           setValue('microphone', deviceList.microphones[0].deviceId);
         }
         if (deviceList.speakers.length > 0) {
+          console.log(deviceList.speakers[0], 'deviceList.speakers[0]');
           setValue('speaker', deviceList.speakers[0].deviceId);
         }
       }

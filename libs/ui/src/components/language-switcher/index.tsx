@@ -19,8 +19,8 @@ export function LanguageSwitcher({ locale }: any) {
 
     router.push(newUrl, { locale: nextLocale });
 
-    if (pathName === '/call') {
-      window.location.href = `/${nextLocale}/call?${params}`;
+    if (pathName === '/waiting') {
+      window.location.href = `/${nextLocale}/waiting?${params}`;
     }
   };
 

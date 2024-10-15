@@ -102,7 +102,7 @@ const AbsherForm: React.FC<AbsherFormProps> = ({ setStep }) => {
                   {...field}
                   id="verificationCode"
                   placeholder={t('enterCode')}
-                  className="mt-2 w-full rounded-md border p-3 focus:outline-none focus:ring-2 focus:ring-green-600"
+                  className="mt-2 w-full"
                 />
               </FormControl>
               <FormMessage />

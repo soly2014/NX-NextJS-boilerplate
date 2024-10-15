@@ -20,3 +20,10 @@
 [dir='rtl'] #sendIconWrapper {
   transform: rotate(180deg);
 }
+
+button:has(i[data-icon-name='HoldCallContextualMenuItem']) {
+  display: none !important;
+}
+button:has(i[data-icon-name='GalleryOptions']) {
+  display: none !important;
+}

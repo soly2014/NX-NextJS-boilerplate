@@ -61,17 +61,22 @@ export const TeamsCallChat = ({
             endCallButton: true,
             exitSpotlightButton: false,
             microphoneButton: true,
-            moreButton: false,
+            moreButton: true,
             participantsButton: true,
             peopleButton: true,
             raiseHandButton: false,
-            reactionButton: true,
+            reactionButton: false,
             screenShareButton: true,
             teamsMeetingPhoneCallButton: false,
             holdButton: false,
             captionsButton: true,
           },
-
+          galleryOptions: {
+            layout: 'default',
+          },
+          // remoteVideoTileMenuOptions: {
+          //   isHidden: false,
+          // },
           surveyOptions: {
             disableSurvey: true,
           },

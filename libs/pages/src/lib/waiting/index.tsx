@@ -49,15 +49,21 @@ export const WaitingPage: React.FC<{
   useEffect(() => {
     // Set a timer to redirect the user after 5 minutes (300,000 ms)
     const timer = setTimeout(() => {
-      router.push('/timeout'); // Redirect to a page of your choice
+      if (!isCallAdmitted) {
+        router.push('/timeout'); // Redirect to a page of your choice
+      }
     }, THIRTY_MINUTES); // 300,000 ms = 5 minutes
 
     // Clear the timer when the component unmounts
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [router, isCallAdmitted]);
 
   useEffect(() => {
     if (isCallAdmitted) {
+      // router.replace(
+      //   `/call?meetingLink=${meetingLink}&meetingId=${meetingId}&serviceType=${serviceType}&fullName=${fullName}&userToken=${userToken}&userId=${userId}`,
+      // );
+
       queryClient.cancelQueries({
         queryKey: ['waitingStatus', meetingId, serviceType],
       });

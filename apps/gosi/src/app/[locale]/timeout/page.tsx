@@ -19,7 +19,7 @@ export const ThankYouPage: React.FC = async () => {
       <div className="flex min-h-[calc(100dvh-15.2rem)] flex-col items-center justify-center py-10">
         <div className="max-w-md rounded-md p-6 text-center">
           <h2 className="mb-4 text-3xl font-bold text-gray-800">
-            {t('thank_you')}
+            {t('dear_customer')}
           </h2>
           <p className="mb-6 text-xl text-gray-700">{t('time_out_message')}</p>
           <Button

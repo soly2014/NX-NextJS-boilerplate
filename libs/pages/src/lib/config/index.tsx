@@ -89,6 +89,19 @@ export const ConfigPage: React.FC = () => {
   );
 
   useEffect(() => {
+    // Check if the current form values for camera, microphone, or speaker are empty
+    if (!methods.getValues('camera') && devices.cameras.length > 0) {
+      setValue('camera', devices.cameras[0].deviceId);
+    }
+    if (!methods.getValues('microphone') && devices.microphones.length > 0) {
+      setValue('microphone', devices.microphones[0].deviceId);
+    }
+    if (!methods.getValues('speaker') && devices.speakers.length > 0) {
+      setValue('speaker', devices.speakers[0].deviceId);
+    }
+  }, [devices, setValue, methods]);
+
+  useEffect(() => {
     async function fetchDevices() {
       const permissionGranted = await askDevicePermissions();
       if (!permissionGranted) {

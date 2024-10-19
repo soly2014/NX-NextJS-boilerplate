@@ -20,17 +20,16 @@ import {
 import { useRouter } from '@navigation';
 import { useToast } from '@hooks';
 
-// Define validation schema using Zod
 const feedbackFormSchema = (t: any) => {
   return z
     .object({
       ratings: z
         .number({ required_error: t('validation.this_field_is_required') })
-        .min(1)
+        .min(1, { message: t('validation.min_rating') })
         .max(5, { message: t('validation.max_rating') }),
       serviceRatings: z
         .number({ required_error: t('validation.this_field_is_required') })
-        .min(1)
+        .min(1, { message: t('validation.min_rating') })
         .max(5, { message: t('validation.max_rating') }),
       comments: z
         .string({ required_error: t('validation.this_field_is_required') })
@@ -38,15 +37,22 @@ const feedbackFormSchema = (t: any) => {
       reasonForBadRating: z.string().optional(),
     })
     .superRefine((data, ctx) => {
+      console.log(0); // Log every time superRefine runs
+
+      // Check if either ratings or serviceRatings is <= 2 and reasonForBadRating is not provided or empty
       if (
-        (data.ratings <= 2 || data.serviceRatings <= 2) &&
+        (data.ratings == 2 ||
+          data.ratings == 1 ||
+          data.serviceRatings == 2 ||
+          data.serviceRatings == 1) &&
         !data.reasonForBadRating?.trim()
       ) {
         ctx.addIssue({
-          code: 'custom',
+          code: z.ZodIssueCode.custom,
           path: ['reasonForBadRating'],
           message: t('validation.this_field_is_required'),
         });
+        console.log(1);
       }
     });
 };
@@ -67,8 +73,8 @@ export const FeedbackForm: React.FC = () => {
   const methods = useForm<FeedbackFormSchema>({
     resolver: zodResolver(feedbackFormSchema(t)),
     defaultValues: {
-      ratings: undefined,
-      serviceRatings: undefined,
+      ratings: 0,
+      serviceRatings: 0,
       comments: '',
       reasonForBadRating: '',
     },
@@ -79,6 +85,7 @@ export const FeedbackForm: React.FC = () => {
     setValue,
     watch,
     control,
+    trigger,
     formState: { errors },
   } = methods;
 
@@ -121,7 +128,7 @@ export const FeedbackForm: React.FC = () => {
     const newData: any = {
       ...data,
       ratings: data.ratings.toString(),
-      serviceRatings: data.serviceRatings.toString(),
+      serviceRatings: data?.serviceRatings && data.serviceRatings.toString(),
     };
 
     mutation.mutate(newData); // Submit the data using the mutation
@@ -230,7 +237,10 @@ export const FeedbackForm: React.FC = () => {
           )}
         </div>
 
-        {(ratings <= 2 || serviceRatings <= 2) && (
+        {(ratings == 2 ||
+          ratings == 1 ||
+          serviceRatings == 2 ||
+          serviceRatings == 1) && (
           <div className="mb-4 w-full max-w-sm">
             <FormField
               name="reasonForBadRating"

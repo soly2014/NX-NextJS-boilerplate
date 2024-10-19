@@ -111,7 +111,7 @@
   "camera_required": "Camera Required",
   "microphone_required": "Microphone Required",
   "speaker_required": "Speaker Required",
-  "time_out_message": " we appreciate your time and would like to inform you that all our customer service employees are currently busy assisting other customers. Please try again later.",
+  "time_out_message": "We appreciate your time and would like to inform you that all our customer service employees are currently busy assisting other customers. Please try again later",
   "estab_admin": "Change the Branch Account Manager",
   "estab_admin_messg": "This service allows the establishers to modify the structure of their facilities by separating a branch from the main facility, or linking a facility with another facility through the authority of the branch account manager",
   "report_eq": "Report an Occupational Injury",

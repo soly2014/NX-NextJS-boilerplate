@@ -35,7 +35,13 @@ export const useVerifyOtpMutation = (
       );
     },
     onError: (error) => {
-      console.error(error);
+      // router.replace(
+      //   `/config?fullname=${encodeURIComponent(
+      //     fullname,
+      //   )}&serviceType=${encodeURIComponent(serviceType)}&mobile=${encodeURIComponent(
+      //     mobile,
+      //   )}&nin=${encodeURIComponent(nin)}`,
+      // );
       toast({
         variant: 'destructive',
         title: t('toast.destructive.title'),

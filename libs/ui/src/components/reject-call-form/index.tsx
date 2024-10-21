@@ -120,9 +120,9 @@ export const RejectCallForm: React.FC = () => {
       >
         <div className="mb-4 text-start">
           <h2 className="text-lg font-bold text-gray-800">
-            {t('please_provide_reason')}
+            {t('please_provide_other_reason')}
           </h2>
-          <p className="text-gray-600">{t('participation_note')}</p>
+          {/* <p className="text-gray-600">{t('participation_note')}</p> */}
         </div>
 
         <div className="mb-4">
@@ -174,7 +174,7 @@ export const RejectCallForm: React.FC = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="otherReason" className="text-gray-800">
-                    {t('please_provide_other_reason')}
+                    {t('please_provide_reason')}
                   </FormLabel>
                   <FormControl>
                     <Textarea

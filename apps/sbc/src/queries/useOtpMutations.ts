@@ -13,8 +13,8 @@ export const useVerifyOtpMutation = (
   setStep: React.Dispatch<React.SetStateAction<number>>,
 ) => {
   const router = useRouter();
-  const t = useTranslations();
   const { toast } = useToast();
+  const t = useTranslations();
 
   return useMutation({
     mutationFn: async (data: { verificationCode: string }) => {
@@ -27,16 +27,20 @@ export const useVerifyOtpMutation = (
     },
     onSuccess: (data) => {
       router.replace(
-        `/config?token=${data.token}&fullName=${encodeURIComponent(
+        `/config?token=${data.token}&fullname=${encodeURIComponent(
           fullname,
-        )}&serviceType=${encodeURIComponent(serviceType)}&mobileNumber=${encodeURIComponent(
+        )}&serviceType=${encodeURIComponent(serviceType)}&mobile=${encodeURIComponent(
           mobile,
         )}&nin=${encodeURIComponent(nin)}`,
       );
     },
     onError: (error) => {
       console.error(error);
-      // Handle error (e.g., show a message to the user)
+      toast({
+        variant: 'destructive',
+        title: t('toast.destructive.title'),
+        description: t('toast.destructive.description'),
+      });
     },
   });
 };
@@ -49,6 +53,8 @@ export const useResendOtpMutation = (
   setIsResendDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   setCounter: React.Dispatch<React.SetStateAction<number>>,
 ) => {
+  const t = useTranslations();
+  const { toast } = useToast();
   return useMutation({
     mutationFn: async () => {
       const body = {
@@ -63,6 +69,11 @@ export const useResendOtpMutation = (
       setCounter(60); // Restart countdown
     },
     onError: (error) => {
+      toast({
+        variant: 'destructive',
+        title: t('toast.destructive.title'),
+        description: t('toast.destructive.description'),
+      });
       console.error(error);
       // Handle error (e.g., show a message to the user)
     },

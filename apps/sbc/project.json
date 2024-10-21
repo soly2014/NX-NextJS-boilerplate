@@ -20,6 +20,7 @@
         }
       }
     },
+
     "serve": {
       "executor": "@nx/next:server",
       "options": {
@@ -27,6 +28,10 @@
         "dev": true
       },
       "configurations": {
+        "development": {
+          "dev": true,
+          "port": 4000
+        },
         "production": {
           "buildTarget": "sbc:build:production",
           "dev": false

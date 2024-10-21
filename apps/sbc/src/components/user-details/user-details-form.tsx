@@ -20,16 +20,14 @@ import {
   Input,
 } from '@ui';
 import { useUserStore } from '@sbc/store/useUserStore';
-
 import {
   userDetailsFormSchema,
   FormSchema,
 } from '@sbc/schemas/userDetailsFormSchema';
 import { useSendCustomerOtpMutation } from '@sbc/queries/userMutations';
-import { AlertError } from '@ui';
 import { useLocale } from 'next-intl';
 import { AxiosError } from 'axios';
-import { useWorkingHoursQueries } from '@sbc/queries/useWorkingHours';
+import { useWorkingHoursAllQuery } from '@sbc/queries/useWorkingHours';
 
 const UserDetailsForm = ({
   setStep,
@@ -39,18 +37,18 @@ const UserDetailsForm = ({
   const t = useTranslations();
   const { setFullname, setServiceType, setNin, setMobile } = useUserStore();
   const locale = useLocale();
-  const queries = useWorkingHoursQueries(); // Use the custom hook
 
-  const [gosiPublicQuery, gosiSignLanguageQuery, newGosiQuery] = queries;
+  // Fetch all working hours in a single query
+  const { data } = useWorkingHoursAllQuery();
 
-  const gosiPublic = gosiPublicQuery?.data?.statues;
-  const newGosi = newGosiQuery?.data?.statues;
-  const gosiSignLanguage = gosiSignLanguageQuery?.data?.statues;
+  const gosiPublic = data?.['gosi-public'];
+  const newGosi = data?.['new-gosi'];
+  const gosiSignLanguage = data?.['gosi-signlanguage'];
 
   const methods = useForm<FormSchema>({
     resolver: zodResolver(userDetailsFormSchema(t)),
     defaultValues: {
-      serviceType: 'retirement',
+      serviceType: undefined,
       idNumber: '',
       name: '',
       phone: '',
@@ -59,7 +57,7 @@ const UserDetailsForm = ({
     },
   });
 
-  const { handleSubmit, control } = methods;
+  const { handleSubmit, control, setError, clearErrors } = methods;
   const serviceType = useWatch({ control, name: 'serviceType' });
 
   const sendCustomerOtpMutation = useSendCustomerOtpMutation(setStep);
@@ -80,6 +78,10 @@ const UserDetailsForm = ({
         break;
       default:
         serviceTypeAsParam = 'gosi-establishment';
+    }
+
+    if (data?.signLanguage === 'yes') {
+      serviceTypeAsParam = 'gosi-signlanguage';
     }
 
     setFullname(data.name);
@@ -110,17 +112,31 @@ const UserDetailsForm = ({
         <FormField
           name="serviceType"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <FormItem>
               <FormLabel htmlFor="serviceType" className="text-end">
                 {t('serviceType')}
               </FormLabel>
               <FormControl>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    if (value === 'none') {
+                      setError('serviceType', {
+                        type: 'required',
+                        message: t('validation.this_field_is_required'),
+                      });
+                    } else {
+                      clearErrors('serviceType');
+                    }
+                  }}
+                  value={field.value}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={t('select_service_type')} />
                   </SelectTrigger>
                   <SelectContent>
+                    {/* <SelectItem value="none">{t('select_none')}</SelectItem> */}
                     {newGosi && (
                       <SelectItem value="newSystem">
                         {t('new_system')}
@@ -139,7 +155,14 @@ const UserDetailsForm = ({
                   </SelectContent>
                 </Select>
               </FormControl>
-              <FormMessage />
+              {/* Display error message for serviceType */}
+              <FormMessage>
+                {fieldState?.error?.message && (
+                  <span className="text-destructive">
+                    {fieldState.error.message}
+                  </span>
+                )}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -184,6 +207,19 @@ const UserDetailsForm = ({
                   {...field}
                   id="idNumber"
                   placeholder={t('nin_residence_placeholder')}
+                  maxLength={10}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value);
+                    if (/[^0-9]/.test(value)) {
+                      setError('idNumber', {
+                        type: 'manual',
+                        message: t('idNumber_invalid'),
+                      });
+                    } else {
+                      clearErrors('idNumber');
+                    }
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -215,14 +251,29 @@ const UserDetailsForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel htmlFor="phone">{t('mobile')}</FormLabel>
-              <FormControl className="mt-0">
-                <Input
-                  {...field}
-                  id="phone"
-                  placeholder={t('mobile_placeholder')}
-                  className="mt-0"
-                />
-              </FormControl>
+              <div className="flex items-center">
+                <FormControl>
+                  <Input
+                    {...field}
+                    id="phone"
+                    placeholder={t('mobile_placeholder')}
+                    value={
+                      field.value.startsWith('05')
+                        ? field.value
+                        : `05${field.value}`
+                    }
+                    onChange={(e) =>
+                      field.onChange(
+                        e.target.value.slice(0, 2) === '05'
+                          ? e.target.value
+                          : `05${e.target.value}`,
+                      )
+                    }
+                    style={{ direction: 'ltr' }}
+                    maxLength={10}
+                  />
+                </FormControl>
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -273,20 +324,12 @@ const UserDetailsForm = ({
           )}
         />
 
-        {sendCustomerOtpMutation.isError && (
-          <AlertError>
-            {errorText
-              ? JSON.parse(errorText.slice(1, -1).replace(/\\"/g, '"'))
-                  ?.message[locale === 'ar' ? 'arabic' : 'english']
-              : t('Error.message')}
-          </AlertError>
-        )}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           <Button
             size="lg"
             type="submit"
             variant="secondary"
-            className="w-[100%] md:w-auto"
+            className="w-[100%] px-16 md:w-auto"
             isLoading={sendCustomerOtpMutation.isPending}
           >
             {t('submit_btn')}

@@ -102,7 +102,7 @@ const AbsherForm: React.FC<AbsherFormProps> = ({ setStep }) => {
                   {...field}
                   id="verificationCode"
                   placeholder={t('enterCode')}
-                  className="mt-2 w-full rounded-md border p-3 focus:outline-none focus:ring-2 focus:ring-green-600"
+                  className="mt-2 w-full"
                 />
               </FormControl>
               <FormMessage />
@@ -123,12 +123,12 @@ const AbsherForm: React.FC<AbsherFormProps> = ({ setStep }) => {
           </Button>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           <Button
             size="lg"
             type="submit"
             variant="secondary"
-            className="mt-5 w-[100%] px-12 md:w-auto"
+            className="mt-5 w-[100%] px-16 md:w-auto"
             isLoading={verifyOtpMutation.isPending}
             disabled={verifyOtpMutation.isPending}
           >
@@ -136,11 +136,11 @@ const AbsherForm: React.FC<AbsherFormProps> = ({ setStep }) => {
           </Button>
         </div>
 
-        {verifyOtpMutation.isError && (
+        {/* {verifyOtpMutation.isError && (
           <p className="mt-2 text-red-500">
             Error verifying OTP: {verifyOtpMutation.error.message}
           </p>
-        )}
+        )} */}
       </form>
     </FormProvider>
   );

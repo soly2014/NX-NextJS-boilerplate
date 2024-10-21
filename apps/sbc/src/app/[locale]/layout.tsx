@@ -53,7 +53,7 @@ export default async function RootLayout({
         <ClientQueryProvider>
           <NextIntlClientProvider messages={messages}>
             <LocaleProviders locale={locale}>
-              <div className="flex min-h-[100dvh] flex-col">
+              <div className="flex min-h-[100vh] flex-col">
                 <Header locale={locale} />
                 <div className="min-h-[calc(100dvh-10.2rem)]">{children}</div>
                 <Footer />

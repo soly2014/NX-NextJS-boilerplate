@@ -3,10 +3,14 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation } from '@tanstack/react-query';
 import { FormSchema } from '../schemas/userDetailsFormSchema';
+import { useToast } from '@hooks';
+import { useTranslations } from 'next-intl';
 
 export const useSendCustomerOtpMutation = (
   setStep: React.Dispatch<React.SetStateAction<number>>,
 ) => {
+  const t = useTranslations();
+  const { toast } = useToast();
   const baseURL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
   return useMutation({
@@ -22,8 +26,15 @@ export const useSendCustomerOtpMutation = (
       setStep(2);
     },
     onError: (error: AxiosError) => {
+      // setStep(2);
       console.error(error.response?.data);
       // Handle error (e.g., show a message to the user)
+
+      toast({
+        variant: 'destructive',
+        title: t('toast.destructive.title'),
+        description: t('toast.destructive.description'),
+      });
     },
   });
 };

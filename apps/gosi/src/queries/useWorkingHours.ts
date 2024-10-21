@@ -11,11 +11,10 @@ const fetchWorkingHoursAll = async () => {
   return response.data;
 };
 
-// Custom Hook to fetch all data using React Query
+// Custom Hook to fetch working hours data (one-time fetch)
 export const useWorkingHoursAllQuery = () => {
   return useQuery({
-    queryKey: ['workingHoursAll'],
+    queryKey: ['workingHoursAll'], // Optional for reference
     queryFn: fetchWorkingHoursAll,
-    refetchInterval: 300000, // 5 minutes
   });
 };
